@@ -169,8 +169,7 @@ const screenData = [{
   ]
 }]
 
-metaData.flag =
-[{
+const flagData = [{
   'flagName': 'testFlag',
   'defaultValue': false
 }, {
@@ -188,4 +187,4 @@ metaData.inventory =
   'text': 'A funny horn'
 }]
 
-export {textData, buttonData, screenData}
+export {textData, buttonData, screenData, flagData}

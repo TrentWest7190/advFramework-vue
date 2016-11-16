@@ -3,18 +3,15 @@
 </template>
 
 <script>
-import { textData } from '../data'
-import _ from 'lodash'
-
 export default {
 
   name: 'TextPanel',
 
-  props: ['textId'],
+  props: ['textData'],
 
-  data () {
-    return {
-      displayText: _.find(textData, {'id': this.textId})
+  computed: {
+    displayText () {
+      return this.textData.text
     }
   }
 }

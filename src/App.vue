@@ -1,14 +1,13 @@
 <template>
   <div id="app">
-    <TextPanel v-bind:text-id="screenToLoad.text"></TextPanel>
-    <ButtonPanel v-bind:screen-buttons="screenToLoad.buttons"></ButtonPanel>
+    <TextPanel v-bind:text-data="screenToLoad.text"></TextPanel>
+    <ButtonPanel v-bind:button-data="screenToLoad.buttons"></ButtonPanel>
   </div>
 </template>
 
 <script>
 import TextPanel from './components/TextPanel'
 import ButtonPanel from './components/ButtonPanel'
-import { screenData } from './data'
 import _ from 'lodash'
 
 export default {
@@ -19,7 +18,7 @@ export default {
   },
   computed: {
     screenToLoad () {
-      return _.find(screenData, {'id': this.$store.state.loadedScreen})
+      return _.find(this.$store.state.compiledScreens, {'id': this.$store.state.screenToLoad})
     }
   }
 }

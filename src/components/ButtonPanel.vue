@@ -1,24 +1,25 @@
 <template>
 <div id="button-panel">
-    <button v-for="button in buttons">{{button.text}}</button>
+    <singleButton v-for="button in buttonData" v-bind:button="button"></singleButton>
 </div>
 </template>
 
 <script>
-import { buttonData } from '../data'
+import SingleButton from './SingleButton'
 import _ from 'lodash'
 
 export default {
 
   name: 'ButtonPanel',
+  components: {
+    SingleButton
+  },
 
-  props: ['screenButtons'],
+  props: ['buttonData'],
 
-  data () {
-    return {
-      buttons: _.map(this.screenButtons, function (screenButton) {
-        return _.merge(screenButton, _.find(buttonData, {'id': screenButton.id}))
-      })
+  methods: {
+    test (button) {
+      console.log(button)
     }
   }
 }
