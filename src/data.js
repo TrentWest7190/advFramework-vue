@@ -17,8 +17,7 @@ const textData = [{
   'text': 'doota doot doo'
 }]
 
-metaData.button =
-[{
+const buttonData = [{
   'id': 1,
   'text': 'go forward',
   'action': [{
@@ -106,8 +105,7 @@ metaData.button =
   }]
 }]
 
-metaData.screen =
-[{
+const screenData = [{
   'id': 1,
   'text': 1,
   'buttons': [
@@ -190,4 +188,4 @@ metaData.inventory =
   'text': 'A funny horn'
 }]
 
-export {textData}
+export {textData, buttonData, screenData}

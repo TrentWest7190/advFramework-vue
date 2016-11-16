@@ -1,19 +1,25 @@
 <template>
   <div id="app">
-  <PanelText></PanelText>
+    <TextPanel v-bind:text-id="screenToLoad.text"></TextPanel>
+    <ButtonPanel v-bind:screen-buttons="screenToLoad.buttons"></ButtonPanel>
   </div>
 </template>
 
 <script>
-import PanelText from './components/PanelText'
+import TextPanel from './components/TextPanel'
+import ButtonPanel from './components/ButtonPanel'
+import { screenData } from './data'
+import _ from 'lodash'
 
 export default {
   name: 'app',
   components: {
-    PanelText
+    TextPanel,
+    ButtonPanel
   },
-  data () {
-    return {
+  computed: {
+    screenToLoad () {
+      return _.find(screenData, {'id': this.$store.state.loadedScreen})
     }
   }
 }
@@ -21,11 +27,11 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 80vh;
+  width: 50%;
+  float: left;
+  border: 1px solid red;
 }
 </style>
