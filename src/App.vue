@@ -1,24 +1,33 @@
 <template>
   <div id="app">
-    <TextPanel v-bind:text-data="screenToLoad.text"></TextPanel>
-    <ButtonPanel v-bind:button-data="screenToLoad.buttons"></ButtonPanel>
+    <div id="leftSideDiv">
+      <TextPanel v-bind:text-data="screenToLoad.text"></TextPanel>
+      <ButtonPanel v-bind:button-data="screenToLoad.buttons"></ButtonPanel>
+    </div>
+    <div id="rightSideDiv">
+      <InventoryPanel v-bind:inventory-data="inventoryData"></InventoryPanel>
+    </div>
   </div>
 </template>
 
 <script>
 import TextPanel from './components/TextPanel'
 import ButtonPanel from './components/ButtonPanel'
-import _ from 'lodash'
+import InventoryPanel from './components/InventoryPanel'
 
 export default {
   name: 'app',
   components: {
     TextPanel,
-    ButtonPanel
+    ButtonPanel,
+    InventoryPanel
   },
   computed: {
     screenToLoad () {
-      return _.find(this.$store.state.compiledScreens, {'id': this.$store.state.screenToLoad})
+      return this.$store.state.loadedScreen
+    },
+    inventoryData () {
+      return this.$store.state.playerInventoryModule.items
     }
   }
 }
@@ -32,5 +41,21 @@ export default {
   width: 50%;
   float: left;
   border: 1px solid red;
+}
+
+#leftSideDiv {
+  box-sizing: border-box;
+  display: inline-block;
+  float: left;
+  height: 100%;
+  width:  75%;
+}
+
+#rightSideDiv {
+  box-sizing: border-box;
+  display: inline-block;
+  float: left;
+  height: 100%;
+  width:  25%;
 }
 </style>

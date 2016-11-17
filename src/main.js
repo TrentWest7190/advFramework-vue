@@ -9,4 +9,3 @@ new Vue({
   store,
   components: { App }
 })
-

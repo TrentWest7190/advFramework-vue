@@ -6,7 +6,6 @@
 
 <script>
 import SingleButton from './SingleButton'
-import _ from 'lodash'
 
 export default {
 

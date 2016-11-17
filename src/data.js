@@ -1,5 +1,3 @@
-const metaData = {}
-
 const textData = [{
   'id': 1,
   'text': 'the first test text string'
@@ -68,7 +66,7 @@ const buttonData = [{
     'type': 'setFlag',
     'target': {
       'flagName': 'testCounter',
-      'operation': 'add',
+      'operation': 'plus',
       'value': 1
     }
   }]
@@ -90,7 +88,7 @@ const buttonData = [{
     'type': 'getItem',
     'target': {
       'itemName': 'horn',
-      'number': 1
+      'amount': 1
     }
 
   }]
@@ -177,8 +175,7 @@ const flagData = [{
   'defaultValue': 10
 }]
 
-metaData.inventory =
-[{
+const inventoryData = [{
   'itemName': 'oldKey',
   'text': 'An old key',
   'uses': 1
@@ -187,4 +184,4 @@ metaData.inventory =
   'text': 'A funny horn'
 }]
 
-export {textData, buttonData, screenData, flagData}
+export {textData, buttonData, screenData, flagData, inventoryData}

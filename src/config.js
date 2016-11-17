@@ -1,3 +1,3 @@
 export default {
-  'startScreenId': 1
+  'startScreenId': 4
 }

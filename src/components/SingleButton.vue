@@ -4,6 +4,7 @@
 
 <script>
 import _ from 'lodash'
+import * as utilFuncs from '../utilityFunctions'
 
 export default {
 
@@ -13,34 +14,26 @@ export default {
 
   computed: {
     displayButton () {
-      let playerFlags = this.$store.state.playerFlags
+      let playerFlags = this.$store.state.playerFlagModule
+      let playerInventory = this.$store.state.playerInventoryModule.items
       return _.every(this.button.conditional, function (subCondition) {
-        let logicalOperators = {
-          'is': function (parameter, value) {
-            return parameter === value
-          },
-          'greaterThan': function (parameter, value) {
-            return parameter > value
-          },
-          'lessThan': function (parameter, value) {
-            return parameter < value
-          }
+        let conditionType = subCondition.condition
+        let parameter
+        if (subCondition.type === 'inventory') {
+          parameter = playerInventory
+        } else {
+          parameter = playerFlags[subCondition.flag]
         }
-        logicalOperators[subCondition.condition](playerFlags[subCondition.flag], subCondition.value)
+        let value = subCondition.value
+        return utilFuncs.logicalOperators[conditionType](parameter, value)
       })
     }
   },
 
   methods: {
     performActions: function (buttonActions) {
-      let that = this
-      let possibleActions = {
-        'loadScreen': function (target) {
-          that.$store.commit('setScreenToLoad', target)
-        }
-      }
       _.each(buttonActions, function (subAction) {
-        possibleActions[subAction.type](subAction.target)
+        utilFuncs.performableActions[subAction.type](subAction.target)
       })
     }
   }
