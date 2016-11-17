@@ -3,6 +3,10 @@ import Vuex from 'vuex'
 import * as data from '../data'
 import config from '../config'
 import _ from 'lodash'
+import Text from './structure/text'
+
+const testText = new Text(data.textData[0])
+console.log(testText)
 
 const compiledScreens = screenCompiler(data)
 
@@ -87,7 +91,6 @@ function compileButtons (button) {
   let compiledButton = _.cloneDeep(button)
   _.merge(compiledButton, _.find(data.buttonData, {'id': button.id}))
   if (compiledButton.action) {
-    console.log('in')
     compiledButton.action = _.map(compiledButton.action, compileAction)
   }
   return compiledButton

@@ -13,6 +13,9 @@ const textData = [{
 }, {
   'id': 5,
   'text': 'doota doot doo'
+}, {
+  'id': 6,
+  'text': ['this is a test of an array of text', 'this is the second string in the array', 'and the third']
 }]
 
 const buttonData = [{
