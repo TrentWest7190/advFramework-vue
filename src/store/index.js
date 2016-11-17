@@ -39,7 +39,14 @@ const playerInventoryModule = {
       if (existingItem === undefined) {
         state.items.push(item)
       } else {
-        existingItem.amount += 1
+        existingItem.amount += itemData.amount
+      }
+    },
+    removeItem (state, itemData) {
+      for (let index in state.items) {
+        if (state.items[index].itemName === itemData.itemName) {
+          state.items.splice(index, 1)
+        }
       }
     }
   }

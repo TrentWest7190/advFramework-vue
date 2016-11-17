@@ -27,6 +27,9 @@ const performableActions = {
   'getItem': function (target) {
     store.commit('addItem', target)
   },
+  'dropItem': function (target) {
+    store.commit('removeItem', target)
+  },
   'displayText': function (target) {
     store.commit('appendText', target)
   }

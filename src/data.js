@@ -101,6 +101,15 @@ const buttonData = [{
       'id': 5
     }
   }]
+}, {
+  'id': 13,
+  'text': 'drop horn',
+  'action': [{
+    'type': 'dropItem',
+    'target': {
+      'itemName': 'horn'
+    }
+  }]
 }]
 
 const screenData = [{
@@ -158,6 +167,13 @@ const screenData = [{
   'buttons': [
     { 'id': 11 }, {
       'id': 12,
+      'conditional': [{
+        'type': 'inventory',
+        'condition': 'has',
+        'value': 'horn'
+      }]
+    }, {
+      'id': 13,
       'conditional': [{
         'type': 'inventory',
         'condition': 'has',
