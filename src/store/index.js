@@ -5,10 +5,7 @@ import config from '../config'
 import _ from 'lodash'
 import Text from './structure/text'
 
-const testText = new Text(data.textData[0])
-console.log(testText)
-
-const compiledScreens = screenCompiler(data)
+var compiledScreens = screenCompiler(data)
 
 Vue.use(Vuex)
 
@@ -52,23 +49,37 @@ const playerInventoryModule = {
           state.items.splice(index, 1)
         }
       }
+    },
+    useItem (state, itemData) {
+      for (let index in state.items) {
+        if (state.items[index].itemName === itemData.itemName) {
+          state.items[index].amount -= itemData.subtractUses
+          if (state.items[index].amount <= 0) state.items.splice(index, 1)
+        }
+      }
     }
   }
 }
 
 export default new Vuex.Store({
   state: {
-    loadedScreen: getById(compiledScreens, config.startScreenId)
+    compiledScreens: compiledScreens,
+    loadedScreen: getByAttribute(compiledScreens, config.startScreenId, 'screenId')
   },
   getters: {
   },
   mutations: {
     loadScreen (state, screenIdToLoad) {
-      console.log('loadScreen', screenIdToLoad)
-      state.loadedScreen = getById(compiledScreens, screenIdToLoad)
+      state.loadedScreen = getByAttribute(state.compiledScreens, screenIdToLoad, 'screenId')
     },
     appendText (state, textObj) {
-      state.loadedScreen.text.text += ' ' + textObj.text
+      state.loadedScreen.text.addText(textObj.getLoadedText())
+    },
+    cycleText (state) {
+      state.loadedScreen.text.incrementPointer()
+    },
+    loadText (state, textKeyToLoad) {
+      state.loadedScreen.text.getText(textKeyToLoad)
     }
   },
   modules: {
@@ -80,7 +91,8 @@ export default new Vuex.Store({
 function screenCompiler (data) {
   let compiledScreens = _.map(data.screenData, function (screen) {
     let compiledScreen = _.cloneDeep(screen)
-    compiledScreen.text = _.find(data.textData, {'id': screen.text})
+    if (typeof screen.text === 'string') compiledScreen.text = new Text(screen.text)
+    else compiledScreen.text = new Text(getByAttribute(data.textData, screen.text.textId, 'textId'))
     compiledScreen.buttons = _.map(compiledScreen.buttons, compileButtons)
     return compiledScreen
   })
@@ -97,8 +109,10 @@ function compileButtons (button) {
 }
 
 function compileAction (action) {
-  if (action.type === 'displayText') {
-    action.target = getById(data.textData, action.target.id)
+  if (action.type === 'displayText' && typeof action.target === 'number') {
+    action.target = new Text(getByAttribute(data.textData, action.target.id, 'textId'))
+  } else if (typeof action.target === 'string') {
+    action.target = new Text(action.target, true)
   }
   return action
 }
@@ -116,6 +130,7 @@ function compileItem (itemData) {
   return inventoryItem
 }
 
-function getById (obj, id) {
-  return _.find(obj, {'id': id})
+function getByAttribute (obj, match, attr) {
+  return _.find(obj, function (child) { return child[attr] === match })
 }
+

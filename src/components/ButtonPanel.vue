@@ -14,13 +14,7 @@ export default {
     SingleButton
   },
 
-  props: ['buttonData'],
-
-  methods: {
-    test (button) {
-      console.log(button)
-    }
-  }
+  props: ['buttonData']
 }
 </script>
 

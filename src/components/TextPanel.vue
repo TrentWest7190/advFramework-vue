@@ -1,5 +1,7 @@
 <template>
-<div id="text-panel">{{ displayText }}</div>
+  <div id="text-panel">
+    <pre v-for="text in displayText">{{ text }}</pre>
+  </div>
 </template>
 
 <script>
@@ -11,7 +13,7 @@ export default {
 
   computed: {
     displayText () {
-      return this.textData.text
+      return this.textData.loadedText
     }
   }
 }

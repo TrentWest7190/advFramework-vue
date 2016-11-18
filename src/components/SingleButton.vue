@@ -16,17 +16,7 @@ export default {
     displayButton () {
       let playerFlags = this.$store.state.playerFlagModule
       let playerInventory = this.$store.state.playerInventoryModule.items
-      return _.every(this.button.conditional, function (subCondition) {
-        let conditionType = subCondition.condition
-        let parameter
-        if (subCondition.type === 'inventory') {
-          parameter = playerInventory
-        } else {
-          parameter = playerFlags[subCondition.flag]
-        }
-        let value = subCondition.value
-        return utilFuncs.logicalOperators[conditionType](parameter, value)
-      })
+      return utilFuncs.checkConditions(playerFlags, playerInventory, this.button.conditional)
     }
   },
 
@@ -41,4 +31,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+button {
+  width: 25%;
+  height: 50%;
+  text-align: center;
+  border: 1px solid red;
+  float: left;
+  outline: none;
+}
 </style>
