@@ -1,21 +1,21 @@
 <template>
   <div id="text-panel">
-    <pre v-for="text in displayText">{{ text }}</pre>
+    <SingleParagraph v-for="paragraph in textData" v-bind:paragraph="paragraph"></SingelParagraph>
   </div>
 </template>
 
 <script>
+import SingleParagraph from './SingleParagraph'
+
 export default {
+  components: {
+    SingleParagraph
+  },
 
   name: 'TextPanel',
 
-  props: ['textData'],
+  props: ['textData']
 
-  computed: {
-    displayText () {
-      return this.textData.loadedText
-    }
-  }
 }
 </script>
 

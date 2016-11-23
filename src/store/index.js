@@ -1,16 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as data from '../data'
 import config from '../config'
 import _ from 'lodash'
-import Text from './structure/text'
-
-var compiledScreens = screenCompiler(data)
+import ScreenCompiler from './screenCompiler'
 
 Vue.use(Vuex)
 
 const playerFlagModule = {
-  state: flagCompiler(data.flagData),
+  // state: flagCompiler(data.flagData),
   mutations: {
     plus (state, flagData) {
       state[flagData.flagName] += flagData.value
@@ -63,12 +60,17 @@ const playerInventoryModule = {
 
 export default new Vuex.Store({
   state: {
-    compiledScreens: compiledScreens,
-    loadedScreen: getByAttribute(compiledScreens, config.startScreenId, 'screenId')
+    // compiledScreens: compiledScreens,
+    loadedScreen: {}
   },
   getters: {
   },
   mutations: {
+    compileScreens (state, inputData) {
+      let compiler = new ScreenCompiler(inputData)
+      state.compiledScreens = compiler.compileScreens()
+      state.loadedScreen = getByAttribute(state.compiledScreens, config.startScreenId, 'screenId')
+    },
     loadScreen (state, screenIdToLoad) {
       state.loadedScreen = getByAttribute(state.compiledScreens, screenIdToLoad, 'screenId')
     },
@@ -88,11 +90,10 @@ export default new Vuex.Store({
   }
 })
 
-function screenCompiler (data) {
+/* function screenCompiler (data) {
   let compiledScreens = _.map(data.screenData, function (screen) {
     let compiledScreen = _.cloneDeep(screen)
-    if (typeof screen.text === 'string') compiledScreen.text = new Text(screen.text)
-    else compiledScreen.text = new Text(getByAttribute(data.textData, screen.text.textId, 'textId'))
+    compiledScreen.text = new Paragraph(getByAttribute(data.textData, screen.text.textId, 'textId'))
     compiledScreen.buttons = _.map(compiledScreen.buttons, compileButtons)
     return compiledScreen
   })
@@ -110,9 +111,9 @@ function compileButtons (button) {
 
 function compileAction (action) {
   if (action.type === 'displayText' && typeof action.target === 'number') {
-    action.target = new Text(getByAttribute(data.textData, action.target.id, 'textId'))
+    action.target = new Paragraph(getByAttribute(data.textData, action.target.id, 'textId'))
   } else if (typeof action.target === 'string') {
-    action.target = new Text(action.target, true)
+    action.target = new Paragraph(action.target, true)
   }
   return action
 }
@@ -129,8 +130,11 @@ function compileItem (itemData) {
   _.merge(inventoryItem, _.find(data.inventoryData, {'itemName': itemData.itemName}))
   return inventoryItem
 }
-
+*/
 function getByAttribute (obj, match, attr) {
   return _.find(obj, function (child) { return child[attr] === match })
 }
 
+function compileItem () {
+  return {}
+}

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="leftSideDiv">
-      <TextPanel v-bind:text-data="screenToLoad.text"></TextPanel>
+      <TextPanel v-bind:text-data="screenToLoad.paragraphs"></TextPanel>
       <ButtonPanel v-bind:button-data="screenToLoad.buttons"></ButtonPanel>
     </div>
     <div id="rightSideDiv">
@@ -38,7 +38,7 @@ export default {
   box-sizing: border-box;
   display: inline-block;
   height: 80vh;
-  width: 50%;
+  width: 70%;
   float: left;
   border: 1px solid red;
 }
