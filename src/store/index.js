@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import config from '../config'
-import _ from 'lodash'
 import ScreenCompiler from './screenCompiler'
 
 Vue.use(Vuex)
+
+const compiler = new ScreenCompiler()
 
 const playerFlagModule = {
   // state: flagCompiler(data.flagData),
@@ -32,8 +32,8 @@ const playerInventoryModule = {
   state: { items: [] },
   mutations: {
     addItem (state, itemData) {
-      let item = compileItem(itemData)
-      let existingItem = _.find(state.items, {'itemName': itemData.itemName})
+      let item = compiler.compileItem(itemData)
+      let existingItem = state.items.find(item => item.itemName === itemData.itemName)
       if (existingItem === undefined) {
         state.items.push(item)
       } else {
@@ -66,19 +66,15 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
-    setupAdventure (state, inputData) {
-      let compiler = new ScreenCompiler(inputData)
+    compileScreens (state, inputData) {
+      compiler.fillData(inputData)
       state.compiledScreens = compiler.compileScreens()
-      state.loadedScreen = getByAttribute(state.compiledScreens, config.startScreenId, 'screenId')
+    },
+    compileFlags (state) {
       state.playerFlagModule = compiler.compileFlags()
     },
-    compileScreens (state, inputData) {
-      let compiler = new ScreenCompiler(inputData)
-      state.compiledScreens = compiler.compileScreens()
-      state.loadedScreen = getByAttribute(state.compiledScreens, config.startScreenId, 'screenId')
-    },
     loadScreen (state, screenIdToLoad) {
-      state.loadedScreen = getByAttribute(state.compiledScreens, screenIdToLoad, 'screenId')
+      state.loadedScreen = state.compiledScreens.find(screen => screen.screenId === screenIdToLoad)
     },
     appendText (state, textObj) {
       state.loadedScreen.text.addText(textObj.getLoadedText())
@@ -95,52 +91,3 @@ export default new Vuex.Store({
     playerInventoryModule
   }
 })
-
-/* function screenCompiler (data) {
-  let compiledScreens = _.map(data.screenData, function (screen) {
-    let compiledScreen = _.cloneDeep(screen)
-    compiledScreen.text = new Paragraph(getByAttribute(data.textData, screen.text.textId, 'textId'))
-    compiledScreen.buttons = _.map(compiledScreen.buttons, compileButtons)
-    return compiledScreen
-  })
-  return compiledScreens
-}
-
-function compileButtons (button) {
-  let compiledButton = _.cloneDeep(button)
-  _.merge(compiledButton, _.find(data.buttonData, {'id': button.id}))
-  if (compiledButton.action) {
-    compiledButton.action = _.map(compiledButton.action, compileAction)
-  }
-  return compiledButton
-}
-
-function compileAction (action) {
-  if (action.type === 'displayText' && typeof action.target === 'number') {
-    action.target = new Paragraph(getByAttribute(data.textData, action.target.id, 'textId'))
-  } else if (typeof action.target === 'string') {
-    action.target = new Paragraph(action.target, true)
-  }
-  return action
-}
-
-function flagCompiler (flagData) {
-  return _.reduce(flagData, function (endObj, flag) {
-    endObj[flag.flagName] = flag.defaultValue
-    return endObj
-  }, {})
-}
-
-function compileItem (itemData) {
-  let inventoryItem = _.cloneDeep(itemData)
-  _.merge(inventoryItem, _.find(data.inventoryData, {'itemName': itemData.itemName}))
-  return inventoryItem
-}
-*/
-function getByAttribute (obj, match, attr) {
-  return _.find(obj, function (child) { return child[attr] === match })
-}
-
-function compileItem () {
-  return {}
-}

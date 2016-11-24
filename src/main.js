@@ -16,7 +16,9 @@ new Vue({
   created () {
     this.$http.get('/static/stories/' + config.storyToLoad + '.json').then((response) => {
       console.log(response)
-      store.commit('setupAdventure', response.body)
+      store.commit('compileScreens', response.body)
+      store.commit('compileFlags')
+      store.commit('loadScreen', config.startScreenId)
     })
   }
 })

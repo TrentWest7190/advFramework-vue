@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 class Condition {
   constructor (conditionArray) {
     this.conditionArray = conditionArray
@@ -39,7 +37,7 @@ const logicalOperators = {
   },
   'has': function (parameter, value) {
     console.log(parameter)
-    return _.some(parameter, {'itemName': value})
+    return parameter.some(item => item.itemName === value)
   }
 }
 

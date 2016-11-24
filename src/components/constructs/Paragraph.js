@@ -1,4 +1,3 @@
-// import _ from 'lodash'
 import Condition from './Condition'
 
 class Paragraph {
