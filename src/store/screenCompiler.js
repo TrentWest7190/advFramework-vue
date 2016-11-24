@@ -1,4 +1,3 @@
-import Paragraph from './structure/paragraph'
 import _ from 'lodash'
 
 class ScreenCompiler {
@@ -7,6 +6,7 @@ class ScreenCompiler {
     this.screenData = data.screenData
     this.textData = data.textData
     this.buttonData = data.buttonData
+    this.flagData = data.flagData
   }
 
   compileScreens () {
@@ -23,7 +23,7 @@ class ScreenCompiler {
     var compiledParagraphsForScreen = []
     for (var index in screenParagraphs) {
       var uncompiledParagraph = screenParagraphs[index]
-      var compiledParagraph = new Paragraph(_.merge(uncompiledParagraph, this.findDataObject(this.textData, uncompiledParagraph, 'paragraphId')))
+      var compiledParagraph = _.merge(uncompiledParagraph, this.findDataObject(this.textData, uncompiledParagraph, 'paragraphId'))
       compiledParagraphsForScreen.push(compiledParagraph)
     }
     return compiledParagraphsForScreen
@@ -37,6 +37,13 @@ class ScreenCompiler {
       compiledButtonsForScreen.push(compiledButton)
     }
     return compiledButtonsForScreen
+  }
+
+  compileFlags () {
+    return _.reduce(this.flagData, function (endObj, flag) {
+      endObj[flag.flagName] = flag.defaultValue
+      return endObj
+    }, {})
   }
 
   findDataObject (whatToSearch, findWithin, searchFor) {

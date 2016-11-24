@@ -4,7 +4,7 @@
 
 <script>
 // import _ from 'lodash'
-import * as utilFuncs from '../utilityFunctions'
+import Paragraph from './constructs/Paragraph'
 
 export default {
 
@@ -13,8 +13,11 @@ export default {
   props: ['paragraph'],
 
   computed: {
+    _paragraph () {
+      return new Paragraph(this.paragraph)
+    },
     displayText () {
-      var textContent = this.paragraph.textContent
+      var textContent = this._paragraph.textContent
       var tokenRegex = /%{(.*?)}/g
       var newText = textContent.replace(tokenRegex, this.replaceToken)
       return newText
@@ -25,11 +28,13 @@ export default {
     replaceToken (fullMatch, replacementName) {
       let playerFlags = this.$store.state.playerFlagModule
       let playerInventory = this.$store.state.playerInventoryModule.items
-      var replacementObject = this.paragraph.replacements[replacementName]
-      if (utilFuncs.checkConditions(playerFlags, playerInventory, replacementObject.conditional)) {
-        return replacementObject.evaluateTrue
+      let replacementCondition = this._paragraph.getCondition(replacementName)
+      console.log(replacementCondition)
+      replacementCondition.setPlayerData(playerFlags, playerInventory)
+      if (replacementCondition.checkConditions()) {
+        return this._paragraph.getConditionEvalTrue(replacementName)
       } else {
-        return replacementObject.evaluateFalse
+        return this._paragraph.getConditionEvalFalse(replacementName)
       }
     }
   }
@@ -40,5 +45,6 @@ export default {
 .paragraph {
   font-family: "Lucida Console", Monaco, monospace;
   margin: 10px;
+  font-size: ;
 }
 </style>

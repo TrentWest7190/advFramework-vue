@@ -66,6 +66,12 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
+    setupAdventure (state, inputData) {
+      let compiler = new ScreenCompiler(inputData)
+      state.compiledScreens = compiler.compileScreens()
+      state.loadedScreen = getByAttribute(state.compiledScreens, config.startScreenId, 'screenId')
+      state.playerFlagModule = compiler.compileFlags()
+    },
     compileScreens (state, inputData) {
       let compiler = new ScreenCompiler(inputData)
       state.compiledScreens = compiler.compileScreens()

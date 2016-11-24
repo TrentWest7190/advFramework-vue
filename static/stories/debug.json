@@ -9,9 +9,10 @@
     {
       "isTestFlagTrue":
       {
-        "conditional": [
+        "condition": [
           {
-            "flag": "testFlag",
+            "type": "flag",
+            "playerObject": "testFlag",
             "condition": "is",
             "value": true
           }
