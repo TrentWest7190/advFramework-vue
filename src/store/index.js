@@ -77,10 +77,7 @@ export default new Vuex.Store({
       state.loadedScreen = state.compiledScreens.find(screen => screen.screenId === screenIdToLoad)
     },
     appendText (state, textObj) {
-      state.loadedScreen.text.addText(textObj.getLoadedText())
-    },
-    cycleText (state) {
-      state.loadedScreen.text.incrementPointer()
+      state.loadedScreen.paragraphs.push(compiler.compileSingleParagraph(textObj))
     },
     loadText (state, textKeyToLoad) {
       state.loadedScreen.text.getText(textKeyToLoad)

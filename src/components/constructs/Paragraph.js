@@ -8,6 +8,7 @@ class Paragraph {
       this.paragraphId = paragraph.paragraphId
       this.textContent = paragraph.textContent
       this.replacements = paragraph.replacements
+      this.condition = paragraph.condition
     }
   }
 
@@ -15,8 +16,20 @@ class Paragraph {
     return this.replacements[replacementName]
   }
 
-  getCondition (replacementName) {
-    return new Condition(this.replacements[replacementName].condition)
+  getCondition (playerFlag, playerInventory) {
+    return new Condition(this.condition, playerFlag, playerInventory)
+  }
+
+  checkCondition (playerFlag, playerInventory) {
+    return this.getCondition(playerFlag, playerInventory).checkConditions()
+  }
+
+  getConditionForReplacement (replacementName, playerFlag, playerInventory) {
+    return new Condition(this.replacements[replacementName].condition, playerFlag, playerInventory)
+  }
+
+  checkConditionForReplacement (replacementName, playerFlag, playerInventory) {
+    return this.getConditionForReplacement(replacementName, playerFlag, playerInventory).checkConditions()
   }
 
   getConditionEvalTrue (replacementName) {

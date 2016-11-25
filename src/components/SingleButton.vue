@@ -1,10 +1,9 @@
 <template>
-<button v-if="displayButton" v-on:click="performActions(button.action)">{{ button.text }}</button>
+<button v-if="buttonIsVisible" v-on:click="_button.performActions()">{{ button.text }}</button>
 </template>
 
 <script>
-import _ from 'lodash'
-import * as utilFuncs from '../utilityFunctions'
+import Button from './constructs/Button'
 
 export default {
 
@@ -13,18 +12,14 @@ export default {
   props: ['button'],
 
   computed: {
-    displayButton () {
+    _button () {
+      return new Button(this.button)
+    },
+
+    buttonIsVisible () {
       let playerFlags = this.$store.state.playerFlagModule
       let playerInventory = this.$store.state.playerInventoryModule.items
-      return utilFuncs.checkConditions(playerFlags, playerInventory, this.button.conditional)
-    }
-  },
-
-  methods: {
-    performActions: function (buttonActions) {
-      _.each(buttonActions, function (subAction) {
-        utilFuncs.performableActions[subAction.type](subAction.target)
-      })
+      return this._button.checkCondition(playerFlags, playerInventory)
     }
   }
 }

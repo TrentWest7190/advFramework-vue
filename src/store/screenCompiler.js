@@ -11,36 +11,33 @@ class ScreenCompiler {
     this.textData = data.textData
     this.buttonData = data.buttonData
     this.flagData = data.flagData
+    this.inventoryData = data.inventoryData
   }
 
   compileScreens () {
-    for (var index in this.screenData) {
-      var screen = this.screenData[index]
-      screen.paragraphs = this.compileParagraphsForScreen(screen.paragraphs)
-      screen.buttons = this.compileButtonsForScreen(screen.buttons)
-      this.compiledScreens.push(screen)
-    }
-    return this.compiledScreens
+    return this.screenData.map(this.compileSingleScreen, this)
+  }
+
+  compileSingleScreen (screen) {
+    screen.paragraphs = this.compileParagraphsForScreen(screen.paragraphs)
+    screen.buttons = this.compileButtonsForScreen(screen.buttons)
+    return screen
+  }
+
+  compileSingleParagraph (textObject) {
+    return typeof textObject === 'string' ? textObject : Object.assign(textObject, this.getByAttribute(this.textData, textObject.paragraphId, 'paragraphId'))
   }
 
   compileParagraphsForScreen (screenParagraphs) {
-    var compiledParagraphsForScreen = []
-    for (var index in screenParagraphs) {
-      var uncompiledParagraph = screenParagraphs[index]
-      var compiledParagraph = Object.assign(uncompiledParagraph, this.getByAttribute(this.textData, uncompiledParagraph.paragraphId, 'paragraphId'))
-      compiledParagraphsForScreen.push(compiledParagraph)
-    }
-    return compiledParagraphsForScreen
+    return screenParagraphs.map(this.compileSingleParagraph, this)
+  }
+
+  compileSingleButton (buttonObject) {
+    return Object.assign(buttonObject, this.getByAttribute(this.buttonData, buttonObject.buttonId, 'buttonId'))
   }
 
   compileButtonsForScreen (screenButtons) {
-    var compiledButtonsForScreen = []
-    for (var index in screenButtons) {
-      var uncompiledButton = screenButtons[index]
-      var compiledButton = Object.assign(uncompiledButton, this.getByAttribute(this.buttonData, uncompiledButton.buttonId, 'buttonId'))
-      compiledButtonsForScreen.push(compiledButton)
-    }
-    return compiledButtonsForScreen
+    return screenButtons.map(this.compileSingleButton, this)
   }
 
   compileFlags () {

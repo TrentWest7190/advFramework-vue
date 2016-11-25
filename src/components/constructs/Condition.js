@@ -1,21 +1,28 @@
 class Condition {
-  constructor (conditionArray) {
+  constructor (conditionArray, playerFlag, playerInventory) {
     this.conditionArray = conditionArray
+    this.setPlayerData(playerFlag, playerInventory)
   }
 
   checkConditions () {
-    return this.conditionArray.every(this.checkSubCondition, this)
+    if (typeof this.conditionArray !== 'undefined') {
+      return this.conditionArray.every(this.checkSubCondition, this)
+    } else {
+      return true
+    }
   }
 
   checkSubCondition (subCondition) {
     let parameter
     if (subCondition.type === 'flag') {
-      parameter = this.flags[subCondition.playerObject]
+      parameter = this.flags[subCondition.flag]
     } else if (subCondition.type === 'inventory') {
       parameter = this.inventory
+    } else {
+      console.warn('There is an invalid condition type')
+      return false
     }
     let value = subCondition.value
-    console.log('checkSubCondition', parameter, subCondition.condition, value)
     return logicalOperators[subCondition.condition](parameter, value)
   }
 
@@ -36,7 +43,6 @@ const logicalOperators = {
     return parameter < value
   },
   'has': function (parameter, value) {
-    console.log(parameter)
     return parameter.some(item => item.itemName === value)
   }
 }

@@ -1,9 +1,8 @@
 <template>
-<p class="paragraph">{{ displayText }}</p>
+<p v-if="textIsVisible" class="paragraph">{{ displayText }}</p>
 </template>
 
 <script>
-// import _ from 'lodash'
 import Paragraph from './constructs/Paragraph'
 
 export default {
@@ -21,6 +20,11 @@ export default {
       var tokenRegex = /%{(.*?)}/g
       var newText = textContent.replace(tokenRegex, this.replaceToken)
       return newText
+    },
+    textIsVisible () {
+      let playerFlags = this.$store.state.playerFlagModule
+      let playerInventory = this.$store.state.playerInventoryModule.items
+      return this._paragraph.checkCondition(playerFlags, playerInventory)
     }
   },
 
@@ -28,10 +32,7 @@ export default {
     replaceToken (fullMatch, replacementName) {
       let playerFlags = this.$store.state.playerFlagModule
       let playerInventory = this.$store.state.playerInventoryModule.items
-      let replacementCondition = this._paragraph.getCondition(replacementName)
-      console.log(replacementCondition)
-      replacementCondition.setPlayerData(playerFlags, playerInventory)
-      if (replacementCondition.checkConditions()) {
+      if (this._paragraph.checkConditionForReplacement(replacementName, playerFlags, playerInventory)) {
         return this._paragraph.getConditionEvalTrue(replacementName)
       } else {
         return this._paragraph.getConditionEvalFalse(replacementName)
