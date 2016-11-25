@@ -14,6 +14,7 @@ class Condition {
 
   checkSubCondition (subCondition) {
     let parameter
+    let orBool = false
     if (subCondition.type === 'flag') {
       parameter = this.flags[subCondition.flag]
     } else if (subCondition.type === 'inventory') {
@@ -23,7 +24,11 @@ class Condition {
       return false
     }
     let value = subCondition.value
-    return logicalOperators[subCondition.condition](parameter, value)
+    if (subCondition.or) {
+      let orCondition = new Condition(subCondition.or, this.flags, this.inventory)
+      orBool = orCondition.checkConditions()
+    }
+    return logicalOperators[subCondition.condition](parameter, value) || orBool
   }
 
   setPlayerData (playerFlags, playerInventory) {

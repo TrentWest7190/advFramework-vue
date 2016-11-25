@@ -71,4 +71,126 @@ describe('Condition', () => {
 
     expect(testCondition.checkConditions()).to.equal(false)
   })
+
+  it('Can handle an "or" logical operation', () => {
+    // true || true == true
+    let testCondition = new Condition([{
+      'type': 'flag',
+      'flag': 'trueFlag',
+      'condition': 'is',
+      'value': false,
+      'or': [{
+        'type': 'flag',
+        'flag': 'trueFlag',
+        'condition': 'is',
+        'value': true
+      }]
+    }], flags, items)
+
+    expect(testCondition.checkConditions()).to.equal(true)
+
+    // true || false == true
+    testCondition = new Condition([{
+      'type': 'flag',
+      'flag': 'trueFlag',
+      'condition': 'is',
+      'value': true,
+      'or': [{
+        'type': 'flag',
+        'flag': 'trueFlag',
+        'condition': 'is',
+        'value': false
+      }]
+    }], flags, items)
+
+    expect(testCondition.checkConditions()).to.equal(true)
+
+    // (false || true) && false == false
+    testCondition = new Condition([{
+      'type': 'flag',
+      'flag': 'trueFlag',
+      'condition': 'is',
+      'value': false,
+      'or': [{
+        'type': 'flag',
+        'flag': 'trueFlag',
+        'condition': 'is',
+        'value': true
+      }]
+    },
+    {
+      'type': 'flag',
+      'flag': 'trueFlag',
+      'condition': 'is',
+      'value': false
+    }], flags, items)
+
+    expect(testCondition.checkConditions()).to.equal(false)
+
+    // (false || false) && true == false
+    testCondition = new Condition([{
+      'type': 'flag',
+      'flag': 'trueFlag',
+      'condition': 'is',
+      'value': false,
+      'or': [{
+        'type': 'flag',
+        'flag': 'trueFlag',
+        'condition': 'is',
+        'value': false
+      }]
+    },
+    {
+      'type': 'flag',
+      'flag': 'trueFlag',
+      'condition': 'is',
+      'value': true
+    }], flags, items)
+
+    expect(testCondition.checkConditions()).to.equal(false)
+
+    // (true || false) && true == true
+    testCondition = new Condition([{
+      'type': 'flag',
+      'flag': 'trueFlag',
+      'condition': 'is',
+      'value': true,
+      'or': [{
+        'type': 'flag',
+        'flag': 'trueFlag',
+        'condition': 'is',
+        'value': false
+      }]
+    },
+    {
+      'type': 'flag',
+      'flag': 'trueFlag',
+      'condition': 'is',
+      'value': true
+    }], flags, items)
+
+    expect(testCondition.checkConditions()).to.equal(true)
+
+    // false || (true && false) == false
+    testCondition = new Condition([{
+      'type': 'flag',
+      'flag': 'trueFlag',
+      'condition': 'is',
+      'value': false,
+      'or': [{
+        'type': 'flag',
+        'flag': 'trueFlag',
+        'condition': 'is',
+        'value': true
+      },
+      {
+        'type': 'flag',
+        'flag': 'trueFlag',
+        'condition': 'is',
+        'value': false
+      }]
+    }], flags, items)
+
+    expect(testCondition.checkConditions()).to.equal(false)
+  })
 })
