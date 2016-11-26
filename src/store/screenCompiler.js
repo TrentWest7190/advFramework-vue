@@ -53,6 +53,10 @@ class ScreenCompiler {
     return inventoryItem
   }
 
+  getInventoryData () {
+    return this.inventoryData
+  }
+
   getByAttribute (array, match, attr) {
     return array.find(child => child[attr] === match)
   }

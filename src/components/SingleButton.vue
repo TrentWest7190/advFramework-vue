@@ -17,8 +17,8 @@ export default {
     },
 
     buttonIsVisible () {
-      let playerFlags = this.$store.state.playerFlagModule
-      let playerInventory = this.$store.state.playerInventoryModule.items
+      let playerFlags = this.$store.state.PlayerFlagModule
+      let playerInventory = this.$store.state.PlayerInventoryModule.items
       return this._button.checkCondition(playerFlags, playerInventory)
     }
   }

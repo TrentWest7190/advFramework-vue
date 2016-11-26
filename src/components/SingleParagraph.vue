@@ -22,16 +22,16 @@ export default {
       return newText
     },
     textIsVisible () {
-      let playerFlags = this.$store.state.playerFlagModule
-      let playerInventory = this.$store.state.playerInventoryModule.items
+      let playerFlags = this.$store.state.PlayerFlagModule
+      let playerInventory = this.$store.state.PlayerInventoryModule.items
       return this._paragraph.checkCondition(playerFlags, playerInventory)
     }
   },
 
   methods: {
     replaceToken (fullMatch, replacementName) {
-      let playerFlags = this.$store.state.playerFlagModule
-      let playerInventory = this.$store.state.playerInventoryModule.items
+      let playerFlags = this.$store.state.PlayerFlagModule
+      let playerInventory = this.$store.state.PlayerInventoryModule.items
       if (this._paragraph.checkConditionForReplacement(replacementName, playerFlags, playerInventory)) {
         return this._paragraph.getConditionEvalTrue(replacementName)
       } else {

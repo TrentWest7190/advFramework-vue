@@ -18,6 +18,7 @@ new Vue({
       console.log(response)
       store.commit('compileScreens', response.body)
       store.commit('compileFlags')
+      store.commit('moveItemsToInventory')
       store.commit('loadScreen', config.startScreenId)
     })
   }

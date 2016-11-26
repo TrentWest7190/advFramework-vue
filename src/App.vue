@@ -27,7 +27,7 @@ export default {
       return this.$store.state.loadedScreen
     },
     inventoryData () {
-      return this.$store.state.playerInventoryModule.items
+      return this.$store.state.PlayerInventoryModule.items
     }
   }
 }

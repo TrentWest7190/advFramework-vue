@@ -1,4 +1,4 @@
 export default {
   'storyToLoad': 'debug',
-  'startScreenId': 6
+  'startScreenId': 4
 }
