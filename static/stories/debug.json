@@ -199,7 +199,25 @@
     },
     {
       "buttonId":17,
-      "text":"or succesful"
+      "text":"do a random thing",
+      "action":[
+        {
+          "type":"randomAction",
+          "target":{
+            "weighted": false,
+            "possibleActions":[
+              {
+                "type":"displayText",
+                "target":"it picked 1"
+              },
+              {
+                "type":"displayText",
+                "target":"it picked 2"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "buttonId":18,
