@@ -42,7 +42,7 @@
       "action":[  
         {  
           "type":"loadScreen",
-          "target":2
+          "target":"2"
         }
       ]
     },
@@ -52,7 +52,7 @@
       "action":[  
         {  
           "type":"loadScreen",
-          "target":1
+          "target":"1"
         }
       ]
     },
@@ -92,7 +92,7 @@
       "action":[  
         {  
           "type":"loadScreen",
-          "target":3
+          "target":"3"
         }
       ]
     },
@@ -204,7 +204,7 @@
   ],
   "screenData":[  
     {  
-      "screenId":1,
+      "screenId":"1",
       "paragraphs":[  
         {  
           "paragraphId":1
@@ -220,7 +220,7 @@
       ]
     },
     {  
-      "screenId":2,
+      "screenId":"2",
       "paragraphs":[  
         {  
           "paragraphId":2
@@ -247,7 +247,7 @@
       ]
     },
     {  
-      "screenId":3,
+      "screenId":"3",
       "paragraphs":[  
         {  
           "paragraphId":3,
@@ -304,7 +304,7 @@
       ]
     },
     {  
-      "screenId":4,
+      "screenId":"4",
       "paragraphs":[  
         {  
           "paragraphId":4
@@ -347,7 +347,7 @@
       ]
     },
     {  
-      "screenId":5,
+      "screenId":"5",
       "paragraphs":[  
         {  
           "paragraphId":7
@@ -360,7 +360,7 @@
       ]
     },
     {
-      "screenId":6,
+      "screenId":"6",
       "paragraphs":[
         "random action test"
       ],
@@ -399,5 +399,8 @@
       "itemName":"horn",
       "text":"A funny horn"
     }
-  ]
+  ],
+  "config": {
+    "startScreenId": "1"
+  }
 }

@@ -1,4 +1,5 @@
 export default {
   'storyToLoad': 'debug',
-  'startScreenId': 1
+  'storyList': ['debug'],
+  'startScreenId': '1'
 }

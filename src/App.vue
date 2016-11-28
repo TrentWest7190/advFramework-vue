@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <div id="leftSideDiv">
+      <OptionPanel></OptionPanel>
+    </div>
+    <div id="centerDiv">
       <TextPanel v-bind:text-data="screenToLoad.paragraphs"></TextPanel>
       <ButtonPanel v-bind:button-data="screenToLoad.buttons"></ButtonPanel>
     </div>
@@ -14,13 +17,15 @@
 import TextPanel from './components/TextPanel'
 import ButtonPanel from './components/ButtonPanel'
 import InventoryPanel from './components/InventoryPanel'
+import OptionPanel from './components/OptionPanel'
 
 export default {
   name: 'app',
   components: {
     TextPanel,
     ButtonPanel,
-    InventoryPanel
+    InventoryPanel,
+    OptionPanel
   },
   computed: {
     screenToLoad () {
@@ -39,7 +44,7 @@ export default {
   box-sizing: border-box;
   display: inline-block;
   height: 80vh;
-  width: 70%;
+  width: 80%;
   float: left;
   border: 1px solid red;
 }
@@ -49,7 +54,15 @@ export default {
   display: inline-block;
   float: left;
   height: 100%;
-  width:  75%;
+  width:  10%;
+}
+
+#centerDiv {
+  box-sizing: border-box;
+  display: inline-block;
+  float: left;
+  height: 100%;
+  width:  65%;
 }
 
 #rightSideDiv {

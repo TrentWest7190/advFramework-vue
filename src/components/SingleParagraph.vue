@@ -17,6 +17,7 @@ export default {
     },
     displayText () {
       var textContent = this._paragraph.textContent
+      if (textContent === undefined) return `ERROR: NO TEXT FOR PARAGRAPH ID ${this._paragraph.paragraphId}`
       var tokenRegex = /%{(.*?)}/g
       var newText = textContent.replace(tokenRegex, this.replaceToken)
       return newText
