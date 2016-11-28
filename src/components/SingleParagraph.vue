@@ -42,10 +42,7 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
-.paragraph {
-  font-family: "Lucida Console", Monaco, monospace;
-  margin: 10px;
-  font-size: ;
-}
+<style lang="sass" scoped>
+.paragraph
+  margin: 10px
 </style>

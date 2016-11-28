@@ -35,6 +35,7 @@ export default {
 
 <style>
 #app {
+  font-family: "Segoe UI";
   box-sizing: border-box;
   display: inline-block;
   height: 80vh;
