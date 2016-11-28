@@ -43,9 +43,11 @@ export default {
   font-family: "Segoe UI";
   box-sizing: border-box;
   display: inline-block;
-  height: 80vh;
-  width: 80%;
-  float: left;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   border: 1px solid red;
 }
 
@@ -54,7 +56,7 @@ export default {
   display: inline-block;
   float: left;
   height: 100%;
-  width:  10%;
+  width:  15%;
 }
 
 #centerDiv {
@@ -62,7 +64,7 @@ export default {
   display: inline-block;
   float: left;
   height: 100%;
-  width:  65%;
+  width:  70%;
 }
 
 #rightSideDiv {
@@ -70,6 +72,6 @@ export default {
   display: inline-block;
   float: left;
   height: 100%;
-  width:  25%;
+  width:  15%;
 }
 </style>

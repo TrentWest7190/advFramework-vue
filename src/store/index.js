@@ -45,7 +45,6 @@ export default new Vuex.Store({
   actions: {
     loadStory ({ commit, state }, storyToLoad) {
       Vue.http.get('/static/stories/' + storyToLoad + '.json').then((response) => {
-        console.log(response.data)
         commit('compileScreens', response.data)
         commit('compileFlags')
         commit('moveItemsToInventory')
