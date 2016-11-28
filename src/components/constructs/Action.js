@@ -1,4 +1,5 @@
 import store from '../../store'
+import Condition from './Condition'
 
 class Action {
   constructor (actionArray) {
@@ -7,7 +8,10 @@ class Action {
 
   performActions () {
     this.actionArray.forEach(function (subAction) {
-      performableActions[subAction.type](subAction.target)
+      let actionCondition = new Condition(subAction.condition)
+      if (actionCondition.checkConditions()) {
+        performableActions[subAction.type](subAction.target)
+      }
     })
   }
 

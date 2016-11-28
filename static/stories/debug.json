@@ -200,6 +200,49 @@
     {
       "buttonId":17,
       "text":"or succesful"
+    },
+    {
+      "buttonId":18,
+      "text":"display fav color",
+      "action":[
+        {
+          "type":"displayText",
+          "target":"my favorite color is blue",
+          "condition":[
+            {
+              "type":"flag",
+              "flag":"favColor",
+              "condition":"is",
+              "value":"blue"
+            }
+          ]
+        },
+        {
+          "type":"displayText",
+          "target":"my favorite color is red",
+          "condition":[
+            {
+              "type":"flag",
+              "flag":"favColor",
+              "condition":"is",
+              "value":"red"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "buttonId":19,
+      "text":"fav color is red",
+      "action":[
+        {
+          "type":"setFlag",
+          "target":{  
+            "flagName":"favColor",
+            "operation":"setValue",
+            "value":"red"
+          }
+        }]
     }
   ],
   "screenData":[  
@@ -369,6 +412,20 @@
           "buttonId":17
         }
       ]
+    },
+    {
+      "screenId":"conditionActionTest",
+      "paragraphs":[
+        "under here will be your favorite color"
+      ],
+      "buttons":[
+        {
+          "buttonId":18
+        },
+        {
+          "buttonId":19
+        }
+      ]
     }
   ],
   "flagData":[  
@@ -387,6 +444,10 @@
     {  
       "flagName":"orTest2",
       "defaultValue":false
+    },
+    {
+      "flagName":"favColor",
+      "defaultValue":"blue"
     }
   ],
   "inventoryData":[  
