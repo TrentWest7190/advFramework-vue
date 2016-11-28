@@ -1,7 +1,8 @@
+import store from '../../store'
+
 class Condition {
-  constructor (conditionArray, playerFlag, playerInventory) {
+  constructor (conditionArray) {
     this.conditionArray = conditionArray
-    this.setPlayerData(playerFlag, playerInventory)
   }
 
   checkConditions () {
@@ -16,24 +17,19 @@ class Condition {
     let parameter
     let orBool = false
     if (subCondition.type === 'flag') {
-      parameter = this.flags[subCondition.flag]
+      parameter = store.state.PlayerFlagModule[subCondition.flag]
     } else if (subCondition.type === 'inventory') {
-      parameter = this.inventory
+      parameter = store.state.PlayerInventoryModule
     } else {
       console.warn('There is an invalid condition type')
       return false
     }
     let value = subCondition.value
     if (subCondition.or) {
-      let orCondition = new Condition(subCondition.or, this.flags, this.inventory)
+      let orCondition = new Condition(subCondition.or)
       orBool = orCondition.checkConditions()
     }
     return logicalOperators[subCondition.condition](parameter, value) || orBool
-  }
-
-  setPlayerData (playerFlags, playerInventory) {
-    this.flags = playerFlags
-    this.inventory = playerInventory
   }
 }
 

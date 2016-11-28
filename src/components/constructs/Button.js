@@ -9,12 +9,12 @@ class Button {
     this.condition = button.condition
   }
 
-  getCondition (playerFlag, playerInventory) {
-    return new Condition(this.condition, playerFlag, playerInventory)
+  getCondition () {
+    return new Condition(this.condition)
   }
 
-  checkCondition (playerFlag, playerInventory) {
-    return this.getCondition(playerFlag, playerInventory).checkConditions()
+  checkCondition () {
+    return this.getCondition().checkConditions()
   }
 
   getAction () {

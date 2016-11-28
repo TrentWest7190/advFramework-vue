@@ -22,17 +22,13 @@ export default {
       return newText
     },
     textIsVisible () {
-      let playerFlags = this.$store.state.PlayerFlagModule
-      let playerInventory = this.$store.state.PlayerInventoryModule.items
-      return this._paragraph.checkCondition(playerFlags, playerInventory)
+      return this._paragraph.checkCondition()
     }
   },
 
   methods: {
     replaceToken (fullMatch, replacementName) {
-      let playerFlags = this.$store.state.PlayerFlagModule
-      let playerInventory = this.$store.state.PlayerInventoryModule.items
-      if (this._paragraph.checkConditionForReplacement(replacementName, playerFlags, playerInventory)) {
+      if (this._paragraph.checkConditionForReplacement(replacementName)) {
         return this._paragraph.getConditionEvalTrue(replacementName)
       } else {
         return this._paragraph.getConditionEvalFalse(replacementName)

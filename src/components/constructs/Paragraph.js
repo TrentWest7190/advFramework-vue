@@ -16,20 +16,20 @@ class Paragraph {
     return this.replacements[replacementName]
   }
 
-  getCondition (playerFlag, playerInventory) {
-    return new Condition(this.condition, playerFlag, playerInventory)
+  getCondition () {
+    return new Condition(this.condition)
   }
 
-  checkCondition (playerFlag, playerInventory) {
-    return this.getCondition(playerFlag, playerInventory).checkConditions()
+  checkCondition () {
+    return this.getCondition().checkConditions()
   }
 
-  getConditionForReplacement (replacementName, playerFlag, playerInventory) {
-    return new Condition(this.replacements[replacementName].condition, playerFlag, playerInventory)
+  getConditionForReplacement (replacementName) {
+    return new Condition(this.replacements[replacementName].condition)
   }
 
-  checkConditionForReplacement (replacementName, playerFlag, playerInventory) {
-    return this.getConditionForReplacement(replacementName, playerFlag, playerInventory).checkConditions()
+  checkConditionForReplacement (replacementName) {
+    return this.getConditionForReplacement(replacementName).checkConditions()
   }
 
   getConditionEvalTrue (replacementName) {
