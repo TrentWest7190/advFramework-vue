@@ -1,6 +1,6 @@
 <template>
   <div id="text-panel">
-    <SingleParagraph v-for="paragraph in textData" v-bind:paragraph="paragraph"></SingelParagraph>
+    <SingleParagraph v-for="paragraph in textData" v-bind:paragraph="paragraph"></SingleParagraph>
   </div>
 </template>
 

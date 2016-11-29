@@ -19,7 +19,7 @@ class Condition {
     if (subCondition.type === 'flag') {
       parameter = store.state.PlayerFlagModule[subCondition.flag]
     } else if (subCondition.type === 'inventory') {
-      parameter = store.state.PlayerInventoryModule
+      parameter = store.state.PlayerInventoryModule.items
     } else {
       console.warn('There is an invalid condition type')
       return false

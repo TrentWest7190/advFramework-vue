@@ -33,6 +33,21 @@
     {
       "paragraphId":5,
       "textContent":"dodoooooot"
+    },
+    {
+      "paragraphId":6,
+      "input": true,
+      "bindTo": "favColor"
+    },
+    {
+      "paragraphId":7,
+      "textContent":"%{favColor}",
+      "replacements":{
+        "favColor":{
+          "replaceWith":"flag",
+          "name":"favColor"
+        }
+      }
     }
   ],
   "buttonData":[  
@@ -260,7 +275,18 @@
             "operation":"setValue",
             "value":"red"
           }
-        }]
+        }
+      ]
+    },
+    {
+      "buttonId":20,
+      "text":"display fav color",
+      "action":[
+        {
+          "type":"displayText",
+          "target": {"paragraphId":7}
+        }
+      ]
     }
   ],
   "screenData":[  
@@ -444,6 +470,17 @@
           "buttonId":19
         }
       ]
+    },
+    {
+      "screenId":"textBoxTest",
+      "paragraphs":[
+        { 
+          "paragraphId":6 
+        }
+      ],
+      "buttons":[
+        
+      ]
     }
   ],
   "flagData":[  
@@ -480,6 +517,6 @@
     }
   ],
   "config": {
-    "startScreenId": "1"
+    "startScreenId": "textBoxTest"
   }
 }

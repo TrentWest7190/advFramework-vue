@@ -9,6 +9,8 @@ class Paragraph {
       this.textContent = paragraph.textContent
       this.replacements = paragraph.replacements
       this.condition = paragraph.condition
+      this.input = paragraph.input
+      this.bindTo = paragraph.bindTo
     }
   }
 
@@ -30,6 +32,14 @@ class Paragraph {
 
   checkConditionForReplacement (replacementName) {
     return this.getConditionForReplacement(replacementName).checkConditions()
+  }
+
+  isConditionalReplacement (replacementName) {
+    return this.replacements[replacementName].condition !== undefined
+  }
+
+  getConditionEval (replacementName) {
+    return this.checkConditionForReplacement(replacementName) ? this.getConditionEvalTrue(replacementName) : this.getConditionEvalFalse(replacementName)
   }
 
   getConditionEvalTrue (replacementName) {

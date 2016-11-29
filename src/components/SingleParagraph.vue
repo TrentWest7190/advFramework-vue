@@ -1,5 +1,6 @@
 <template>
-<p v-if="textIsVisible" class="paragraph">{{ displayText }}</p>
+<p v-if="textIsVisible && !isInput" class="paragraph">{{ displayText }}</p>
+<input v-else v-on:keyup.enter="commitInput" v-model="inputValue" placeholder="Press enter when done">
 </template>
 
 <script>
@@ -24,16 +25,21 @@ export default {
     },
     textIsVisible () {
       return this._paragraph.checkCondition()
+    },
+    isInput () {
+      return this._paragraph.input
     }
   },
 
   methods: {
     replaceToken (fullMatch, replacementName) {
-      if (this._paragraph.checkConditionForReplacement(replacementName)) {
-        return this._paragraph.getConditionEvalTrue(replacementName)
-      } else {
-        return this._paragraph.getConditionEvalFalse(replacementName)
+      if (this._paragraph.isConditionalReplacement(replacementName)) {
+        return this._paragraph.getConditionEval(replacementName)
       }
+    },
+
+    commitInput (e) {
+      this.$store.commit('setValue', {flagName: this._paragraph.bindTo, value: this.inputValue})
     }
   }
 }
