@@ -35,6 +35,8 @@ export default {
     replaceToken (fullMatch, replacementName) {
       if (this._paragraph.isConditionalReplacement(replacementName)) {
         return this._paragraph.getConditionEval(replacementName)
+      } else {
+        return this._paragraph.nonConditionalReplace(replacementName)
       }
     },
 

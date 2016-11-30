@@ -1,4 +1,5 @@
 import Condition from './Condition'
+import store from '../../store'
 
 class Paragraph {
   constructor (paragraph) {
@@ -48,6 +49,13 @@ class Paragraph {
 
   getConditionEvalFalse (replacementName) {
     return this.replacements[replacementName].evaluateFalse
+  }
+
+  nonConditionalReplace (replacementName) {
+    let replacement = this.replacements[replacementName]
+    if (replacement.replaceWith === 'flag') {
+      return store.state.PlayerFlagModule[replacement.name]
+    }
   }
 }
 
