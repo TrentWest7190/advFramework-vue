@@ -1,5 +1,5 @@
 export default {
-  'storyToLoad': 'debug',
-  'storyList': ['debug'],
+  'storyToLoad': 'newbuttons',
+  'storyList': ['newbuttons'],
   'startScreenId': '1'
 }

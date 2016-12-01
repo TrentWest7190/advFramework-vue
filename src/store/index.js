@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import ScreenCompiler from './screenCompiler'
+import StoryBuilder from './StoryBuilder'
 import PlayerFlagModule from './modules/PlayerFlagModule'
 import PlayerInventoryModule from './modules/PlayerInventoryModule'
 import VueResource from 'vue-resource'
@@ -9,12 +9,13 @@ Vue.use(VueResource)
 
 Vue.use(Vuex)
 
-const compiler = new ScreenCompiler()
+const builder = new StoryBuilder()
 
 export default new Vuex.Store({
   state: {
     compiledScreens: [],
-    loadedScreen: {}
+    loadedScreen: {},
+    storyConfiguration: {}
   },
   getters: {
     getScreenIds: state => {
@@ -23,20 +24,23 @@ export default new Vuex.Store({
   },
   mutations: {
     compileScreens (state, inputData) {
-      compiler.fillData(inputData)
-      state.compiledScreens = compiler.compileScreens()
+      builder.fillData(inputData)
+      state.compiledScreens = builder.compileScreens()
     },
     compileFlags (state) {
-      state.PlayerFlagModule = compiler.compileFlags()
+      state.PlayerFlagModule = builder.compileFlags()
     },
     moveItemsToInventory (state) {
-      state.PlayerInventoryModule.inventoryData = compiler.getInventoryData()
+      state.PlayerInventoryModule.inventoryData = builder.getInventoryData()
+    },
+    setConfiguration (state) {
+      state.storyConfiguration = builder.getConfiguration()
     },
     loadScreen (state, screenIdToLoad) {
       state.loadedScreen = state.compiledScreens.find(screen => screen.screenId === screenIdToLoad)
     },
     appendText (state, textObj) {
-      state.loadedScreen.paragraphs.push(compiler.compileSingleParagraph(textObj))
+      state.loadedScreen.paragraphs.push(builder.compileSingleParagraph(textObj))
     },
     loadText (state, textKeyToLoad) {
       state.loadedScreen.text.getText(textKeyToLoad)
@@ -46,9 +50,10 @@ export default new Vuex.Store({
     loadStory ({ commit, state }, storyToLoad) {
       Vue.http.get('/static/stories/' + storyToLoad + '.json').then((response) => {
         commit('compileScreens', response.data)
+        commit('setConfiguration')
         commit('compileFlags')
         commit('moveItemsToInventory')
-        commit('loadScreen', response.data.config.startScreenId)
+        commit('loadScreen', state.storyConfiguration.startScreenId)
       })
     }
   },

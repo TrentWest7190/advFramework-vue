@@ -1,4 +1,4 @@
-class ScreenCompiler {
+class StoryBuilder {
   constructor (data) {
     if (data) {
       this.fillData(data)
@@ -12,6 +12,7 @@ class ScreenCompiler {
     this.buttonData = data.buttonData
     this.flagData = data.flagData
     this.inventoryData = data.inventoryData
+    this.config = data.config
   }
 
   compileScreens () {
@@ -36,11 +37,20 @@ class ScreenCompiler {
     return Object.assign(buttonObject, this.getByAttribute(this.buttonData, buttonObject.buttonId, 'buttonId'))
   }
 
-  compileButtonsForScreen (screenButtons) {
-    return screenButtons.map(this.compileSingleButton, this)
+  compileButtonsForScreen (screenButtonData) {
+    if (!Array.isArray(screenButtonData)) {
+      for (let branchName in screenButtonData) {
+        let branch = screenButtonData[branchName]
+        branch = branch.map(this.compileSingleButton, this)
+      }
+      return screenButtonData
+    } else {
+      return screenButtonData.map(this.compileSingleButton, this)
+    }
   }
 
   compileFlags () {
+    if (typeof this.flagData === 'undefined') return
     return this.flagData.reduce(function (endObj, flag) {
       endObj[flag.flagName] = flag.defaultValue
       return endObj
@@ -57,9 +67,13 @@ class ScreenCompiler {
     return this.inventoryData
   }
 
+  getConfiguration () {
+    return this.config
+  }
+
   getByAttribute (array, match, attr) {
     return array.find(child => child[attr] === match)
   }
 }
 
-export default ScreenCompiler
+export default StoryBuilder
