@@ -1,0 +1,35 @@
+{
+  "buttonData": [
+    {
+      "buttonId": "look_sand",
+      "text": "Sand",
+      "action":[
+        {  
+          "type": "displayText",
+          "target": "that's some sand"
+        }
+      ]
+    }
+
+  ],
+
+  "screenData": [
+    {
+      "screenId": "treeTest",
+      "paragraphs": [
+        "this is the tree button test"
+      ],
+      "buttons": {
+        "look": [
+          { "buttonId": "look_sand"}
+        ],
+        "touch": []
+      }
+    }
+  ],
+
+  "config": {
+    "startScreenId": "treeTest",
+    "buttonCategories": ["look", "touch"]
+  }
+}

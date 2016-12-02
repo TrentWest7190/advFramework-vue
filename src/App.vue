@@ -4,8 +4,8 @@
       <OptionPanel></OptionPanel>
     </div>
     <div id="centerDiv">
-      <TextPanel v-bind:text-data="screenToLoad.paragraphs"></TextPanel>
-      <ButtonPanel v-bind:button-data="screenToLoad.buttons"></ButtonPanel>
+      <TextPanel v-if="paragraphData" v-bind:text-data="paragraphData"></TextPanel>
+      <ButtonPanel v-if="buttonData" v-bind:button-data="buttonData"></ButtonPanel>
     </div>
     <div id="rightSideDiv">
       <InventoryPanel v-bind:inventory-data="inventoryData"></InventoryPanel>
@@ -30,6 +30,12 @@ export default {
   computed: {
     screenToLoad () {
       return this.$store.state.loadedScreen
+    },
+    paragraphData () {
+      return this.screenToLoad.paragraphs
+    },
+    buttonData () {
+      return this.screenToLoad.buttons
     },
     inventoryData () {
       return this.$store.state.PlayerInventoryModule.items

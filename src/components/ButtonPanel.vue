@@ -1,6 +1,6 @@
 <template>
 <div id="button-panel">
-    <button v-if="!bottomOfBranch" v-for="(folder, folderName) in loadedButtons" v-on:click="openFolder(folder)">{{ folderName }}</button>
+    <button v-if="!bottomOfBranch" v-for="(folder, folderName) in currentNode" v-on:click="traverseDown(folderName)">{{ folderName }}</button>
     <SingleButton v-else v-for="button in loadedButtons" v-bind:button="button"></singleButton>
     <button v-on:click="traverseBack">Back</button>
 </div>
@@ -21,29 +21,27 @@ export default {
 
   data () {
     return {
-      traveledPath: '',
-      currentLevel: 'top'
+      buttonTree: new ButtonTree(this.buttonData)
     }
   },
 
   computed: {
-    bottomOfBranch () {
-      return Array.isArray(this.loadedButtons)
-    },
-
-    buttonTree () {
-      return new ButtonTree(this.buttonData)
+    currentNode () {
+      return this.buttonTree.getCurrentNode()
     }
   },
 
   methods: {
-    openFolder (folderData) {
-      console.log(folderData)
-      this.loadedButtons = folderData
+    openFolder (nodeName) {
+      console.log(nodeName)
+      this.buttonTree.traverseDown(nodeName)
+    },
+
+    traverseDown (nodeName) {
+      this.buttonTree.traverseDown(nodeName)
     },
 
     traverseBack () {
-
     }
   }
 }

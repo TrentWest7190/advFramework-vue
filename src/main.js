@@ -10,7 +10,7 @@ new Vue({
   store,
   components: { App },
 
-  created () {
+  beforeCreate () {
     store.dispatch('loadStory', config.storyToLoad)
   }
 })

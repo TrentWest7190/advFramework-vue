@@ -1,15 +1,16 @@
 class ButtonTree {
   constructor (buttonData) {
-    this._root = null
-  }
-}
-
-class ButtonNode {
-  constructor (nodeData) {
-    this.data = nodeData
+    this.currentNode = buttonData
     this.parent = null
-    this.children = []
+  }
+
+  traverseDown (nodeName) {
+    this.parent = this.currentNode
+    this.currentNode = this.currentNode[nodeName]
+  }
+
+  getCurrentNode () {
+    return this.currentNode
   }
 }
-
 export default ButtonTree
