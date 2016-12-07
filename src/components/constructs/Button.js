@@ -7,6 +7,7 @@ class Button {
     this.text = button.text
     this.action = button.action
     this.condition = button.condition
+    this.children = button.children
   }
 
   getCondition () {
@@ -23,6 +24,25 @@ class Button {
 
   performActions () {
     this.getAction().performActions()
+  }
+
+  hasChildren () {
+    return typeof this.children !== 'undefined'
+  }
+
+  getChildren () {
+    return this.children
+  }
+
+  checkChildrenConditions () {
+    if (this.hasChildren()) {
+      return this.children.some(function (button) {
+        let tempButton = new Button(button)
+        return tempButton.checkChildrenConditions()
+      }, this)
+    } else {
+      return this.checkCondition()
+    }
   }
 }
 

@@ -1,47 +1,37 @@
 <template>
 <div id="button-panel">
-    <button v-if="!bottomOfBranch" v-for="(folder, folderName) in currentNode" v-on:click="traverseDown(folderName)">{{ folderName }}</button>
-    <SingleButton v-else v-for="button in loadedButtons" v-bind:button="button"></singleButton>
-    <button v-on:click="traverseBack">Back</button>
+    <ActionButton v-for="button in currentNode" v-bind:button="button" v-on:loadChildren="loadChildren"></ActionButton>
+    <button v-if="typeof currentNode._parent !== 'undefined'" v-on:click="goBack()">Back</button>
 </div>
 </template>
 
 <script>
-import SingleButton from './SingleButton'
-import ButtonTree from './constructs/ButtonTree'
+import ActionButton from './ActionButton'
 
 export default {
 
   name: 'ButtonPanel',
   components: {
-    SingleButton
+    ActionButton
   },
 
   props: ['buttonData'],
 
   data () {
     return {
-      buttonTree: new ButtonTree(this.buttonData)
-    }
-  },
-
-  computed: {
-    currentNode () {
-      return this.buttonTree.getCurrentNode()
+      currentNode: this.buttonData
     }
   },
 
   methods: {
-    openFolder (nodeName) {
-      console.log(nodeName)
-      this.buttonTree.traverseDown(nodeName)
+    loadChildren (childrenToLoad) {
+      console.log('loading children', childrenToLoad)
+      Object.defineProperty(childrenToLoad.children, '_parent', {value: this.currentNode})
+      this.currentNode = childrenToLoad.children
     },
 
-    traverseDown (nodeName) {
-      this.buttonTree.traverseDown(nodeName)
-    },
-
-    traverseBack () {
+    goBack () {
+      this.currentNode = this.currentNode._parent
     }
   }
 }

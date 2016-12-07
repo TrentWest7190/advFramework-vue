@@ -13,6 +13,7 @@ const builder = new StoryBuilder()
 
 export default new Vuex.Store({
   state: {
+    lastLoadedScreenId: 0,
     compiledScreens: [],
     loadedScreen: {},
     storyConfiguration: {}
@@ -37,6 +38,7 @@ export default new Vuex.Store({
       state.storyConfiguration = builder.getConfiguration()
     },
     loadScreen (state, screenIdToLoad) {
+      state.lastLoadedScreenId = state.loadedScreen.screenId
       state.loadedScreen = state.compiledScreens.find(screen => screen.screenId === screenIdToLoad)
     },
     appendText (state, textObj) {

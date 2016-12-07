@@ -1,12 +1,35 @@
 {
   "buttonData": [
     {
-      "buttonId": "look_sand",
-      "text": "Sand",
+      "buttonId": "look_sand_ground",
+      "text": "sand on ground",
       "action":[
         {  
           "type": "displayText",
           "target": "that's some sand"
+        }
+      ]
+    },
+    {
+      "buttonId": "look_sand_ground2",
+      "text": "sand on ground2",
+      "action":[
+        {  
+          "type": "displayText",
+          "target": "new sand"
+        }
+      ]
+    },
+    {
+      "buttonId": "grab_horn",
+      "text": "horn",
+      "action":[
+        {
+          "type": "getItem",
+          "target": {
+            "itemName": "horn",
+            "amount": 1
+          }
         }
       ]
     }
@@ -19,12 +42,55 @@
       "paragraphs": [
         "this is the tree button test"
       ],
-      "buttons": {
-        "look": [
-          { "buttonId": "look_sand"}
-        ],
-        "touch": []
-      }
+      "buttons": [
+        {
+          "text": "look",
+          "children": [
+            {
+              "text": "sand",
+              "children": [
+                {
+                  "buttonId": "look_sand_ground",
+                  "condition":[
+                    {  
+                      "type":"flag",
+                      "flag":"trueFlag",
+                      "condition":"is",
+                      "value":false
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "buttonId": "look_sand_ground2",
+              "condition":[  
+                {  
+                  "type":"flag",
+                  "flag":"trueFlag",
+                  "condition":"is",
+                  "value":true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "flagData":[
+    {
+      "flagName":"trueFlag",
+      "defaultValue":true
+    }
+  ],
+
+  "inventoryData":[  
+    {  
+      "itemName":"horn",
+      "text":"A funny horn",
+      "category": "useable"
     }
   ],
 

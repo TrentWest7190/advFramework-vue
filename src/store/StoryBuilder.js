@@ -34,19 +34,25 @@ class StoryBuilder {
   }
 
   compileSingleButton (buttonObject) {
-    return Object.assign(buttonObject, this.getByAttribute(this.buttonData, buttonObject.buttonId, 'buttonId'))
+    let isString = typeof buttonObject === 'string'
+    let buttonData = this.getByAttribute(this.buttonData, isString ? buttonObject : buttonObject.buttonId, 'buttonId')
+    if (isString) {
+      return buttonData
+    } else {
+      return Object.assign(buttonObject, buttonData)
+    }
   }
 
   compileButtonsForScreen (screenButtonData) {
-    if (!Array.isArray(screenButtonData)) {
-      for (let branchName in screenButtonData) {
-        let branch = screenButtonData[branchName]
-        branch = branch.map(this.compileSingleButton, this)
+    return screenButtonData.map(function (button, index, buttonArray) {
+      if (typeof button.children !== 'undefined') {
+        console.log('Detected button tree with text', button.text)
+        button.children = this.compileButtonsForScreen(button.children)
+        return button
+      } else {
+        return this.compileSingleButton(button)
       }
-      return screenButtonData
-    } else {
-      return screenButtonData.map(this.compileSingleButton, this)
-    }
+    }, this)
   }
 
   compileFlags () {
